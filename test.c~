@@ -1,0 +1,12 @@
+#include <stdlib.h>
+
+int main()
+{
+	int count = 0;
+	while(count >11)
+	{
+		printf("Hello World\n");
+		count++;
+	}
+	return 0;
+}
