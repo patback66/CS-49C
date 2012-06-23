@@ -1,45 +1,43 @@
-//Matthew Koken
-//Homework 1
-#include <stdio.h>
+/*
+@author Matthew Koken
+*/
 #include <stdlib.h>
+#include <stdio.h>
+
+
+int Greatest(int Arr1[], int Len)
+{
+	int largest = 0;
+	for (int i=0; i<Len; i++)
+	{
+		if(Arr1[i]>largest)
+		{
+			largest = Arr1[i];
+		}
+	}
+	return largest;
+}
+
+void GreatestPositions(int Arr2[], int Len)
+{
+	int largest = Greatest(Arr2, Len);
+	for (int i = 0; i<Len; i++)
+	{
+		if(Arr2[i]==largest)
+			printf("%d ", i);
+	}
+	printf("\n");
+}
 
 int main()
 {
-	//#1
-	//print all letters a-z
-	char character = 'a';
-	while (character <= 'z')
-	{
-		printf("%c\n",character);
-		character++;
-	}
-	printf("\n");
-	//#2
-	//print all primes <= 200
-	//1 is unique, discard
-	//evens cannot be prime, except for 2
-	for (int number = 2, divisor = 1, prime; number < 201; number++){
-		for(divisor = 2; divisor < number; divisor++){
-			if (number % divisor == 0){
-			prime = 0;
-			break;
-			}
-			prime = 1;
-		}if(prime)
-		{printf("%d\n", number);}
-	}
-	printf("\n");
-	/*#3
-	print 0 A 80 Z, increment 2st 2 & decrement next 2 on each new line until
-	any 2 values are the same
-	 0 A 80 Z
-	 a b  c d
-	 */
-	int a, c;
-	char b, d;
-	for(a = 0, c = 80, b = 'A', d = 'Z'; a != b && a != c && a != d && b != c && c != d && c >= 0; a++, b++, c--, d--)
-	{printf("%d %c %d %c\n", a, b, c, d);}
-	printf("%d %c %d %c\n", a, b, c, d);
+    int array[128];
+    int smallTest[12] = {1,1,2,2,5,2,5,2,5,2,3,4};
+	int greatestNum = Greatest(array, 128);
+	printf("%d is the greatest\n", greatestNum);
+	GreatestPositions(array, 128);
+	greatestNum = Greatest(smallTest, 12);
+	printf("%d is the greatest\n", greatestNum);
+	GreatestPositions(smallTest, 12);
 	return 0;
-
 }
