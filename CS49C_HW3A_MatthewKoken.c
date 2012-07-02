@@ -32,7 +32,7 @@ int getLowest(int hwIndex){
         currLowest = i;
     }
     for (index = 0; index < 100; index++) {
-        if(HW[index][hwIndex]<HW[currLowest][hwIndex] && HW[index][hwIndex] > 0) {
+        if(HW[index][hwIndex]<HW[currLowest][hwIndex] && HW[index][hwIndex] >= 0) {
         currLowest = index;
         }
     }
