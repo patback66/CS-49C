@@ -1,0 +1,190 @@
+Midterm Review Solutions/Answers
+1. 
+For loop
+a[] = {3.0, 3.0, 3.0, 3.0, 3.0}
+i = 0/1/2/3/4
+m = 5/4/3/2/1
+While loop
+m = 2 4
+n = 5 3
+Prints: 
+3.00000 3.00000
+
+2.
+int x[500];
+
+int Diff(int n, int a, int b) {
+	int sum_a = 0;
+	int sum_b = 0;
+	for (int i = 0; i<n; i++) {
+		if (x[i]%a=0) {
+			sum_a+=x[i];
+		}	
+	}
+	for (i = 0; i<n; i++) {
+		if (x[i]%a=0) {
+			sum_b+=x[i];
+		}
+	}
+	return sum_b-sum_a;
+}
+
+3.
+cannot compile -> a=i
+a is an array, requires a[x]=i
+//Unsigned means cannot be negative
+//Can only be positive or zero
+
+4.
+#include <stdio.h>
+char carray[100];
+
+void PrintUpperCase() {
+	for(int i = 0; i<100; i++) {
+		if (a[i]>=97) {
+			printf("%c \n", a[i]-32);
+		} 
+	}
+}
+void PrintUpperCase() {
+	for (int i = 0; i<100; i++) {
+		if((carray[i]>='a')&&(carray[i]<='z')) {
+		printf("%c ", carray[i]-32);
+		}
+	}
+}
+
+Bonus Question
+int m;
+int n;
+m = 3.25;
+n = 8.99999;
+printf("%d %d \n", m, n);
+//prints 
+
+5. 
+Global
+m:
+n: 3.2
+stack //Look in the stack first
+m = 3.2
+r = 5.7/8.2
+func
+m: 3.2/ 10.0
+n: 5.7
+prints: 3.2 3.2 8.2
+
+6. 
+int fact(int m)
+//returns the factorial of m
+
+void PrintFactorials(int a, int b) {
+	for(int i = a; i<=i+b; i++) {
+		printf("%d \n", fact(i));
+	}
+}
+
+7.
+int *CreateNewArray(int n) {
+	int * aptr;
+	aptr = (int *)malloc(n*sizeof(int));
+	return aptr;
+}
+
+8.
+Global
+a = 10
+b = 50/30
+Stack
+func
+*ptr = address of x/address of b
+x = 10/20
+Prints "a is 10 and b is 30"
+
+9.
+int MakeSquare (int *ptr) {
+	*ptr = (*prt)*(*ptr);
+	return *ptr;
+}
+
+10.
+void ChangeN(int []arr, int i) {
+	arr[i] = Mystery(i);
+}
+
+11 Resource
+struct SchoolClass;
+
+struct Student {
+        int id;
+        char name[32];
+        struct SchoolClass *classes[8];
+        int nClasses;
+};
+
+struct SchoolClass {
+        int ccn;
+        char name[32];
+        struct Student *students[32];
+        int nStudents;
+};
+
+
+11a.
+int is 4 bytes
+char is 1 byte
+address is 4 bytes
+//*classes is an array of pointers 
+x = 1000 ( id(4) + name(32) + 8(classes(4)) + nClasses(4)) = 72000
+y =10(4 + 32 + 32(4)+4) = 1680
+sarray takes x bytes of memory
+carray takes y bytes of memory
+
+11b.
+void AddClass(struct Student *sptr, struct SchoolClass *cptr) {
+	//check to revent overflow
+	if (sptr->nClasses == 8 || cptr->nStudents == 32) {
+		return;
+	}
+	sptr->classes[sptr->nClasses++] = cptr;
+	sptr->nClasses++;
+	cptr->students[cptr->nStudents] = sptr;
+	cptr->nStudents++;
+	
+}
+
+11c.
+struct Student *sarray[1000];
+struct SchoolClass *carray[100];
+
+void RemoveInactive() {
+	for(int i = 0; i<1000; i++) {
+		if((sarray[i]!=0) && (sarray[i]->nClasses == 0) ) {
+			free(sarray[i]);
+			sarray[i]=0;
+		}
+	}
+//should concatenate list after removing
+}
+
+12.
+struct ListNode {
+	int data;
+	struct ListNode *next;
+}
+//example
+// 8->2->7->5/
+// 5->2->7->8/
+struct ListNode *Reverse(struct ListNode *lptr) {
+	struct ListNode *tptr;
+	struct ListNode *nptr;
+	struct ListNode *pptr
+	for(tptr = lptr; tptr != 0; tptr->next) {
+		nptr = (struct ListNode*)malloc(sizeof(struct ListNode));
+		nptr ->data = tptr->data;
+		nptr->next = pptr;
+		pptr = nptr;
+	}
+	pptr = NULL;
+	return nptr;
+}
