@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+	//#1
+	char character = 'a';
+	while (character != 'z')
+	{
+		printf(character);
+		character++;
+	}
+	printf(\n);
+	//#2
+	int prime = 1;
+	int divisor = 0;
+	while (prime != 200)
+	{
+		while (divisor > 10 || divisor == 0)
+		{
+			if ((prime%divisor)!=0)
+			{
+				divisor++;
+			}
+			else
+			{
+				divisor = 0;
+			}
+		}
+		prime++;
+	}
+	
+	return 0;
+}

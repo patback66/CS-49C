@@ -1,0 +1,30 @@
+struct ListNode {
+	int data;
+	struct ListNode *next;
+}
+//#10
+int ListLen(struct ListNode *lptr) {
+	for (int n = 0, struct ListNode *tptr=lptr; tptr!=0; tptr=lptr->next) {
+		n++;
+	}
+}
+return n;
+
+//#11
+struct ListNode *AddToSortedList(struct ListNode *lptr, int D) {
+	struct ListNode *tptr;
+	struct ListNode *pptr = 0;
+	struct ListNode *nptr;
+	for (tptr=lptr; (tptr!=0)&&(tptr->data<D); tptr=tptr->next) {
+		pptr=tptr;
+	}
+	nptr=(struct ListNode *)malloc(sizeof(struct ListNode));
+	nptr->data=D;
+	pptr->next=tptr;
+	if(pptr!=0) {
+		pptr->next=nptr;
+		return lptr;
+	} else {
+		return nptr;
+	}
+}
