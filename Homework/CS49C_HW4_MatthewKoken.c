@@ -17,18 +17,19 @@ struct TreeNode {
 
 // 1 point: Insert d into the given tree t, maintain binary order of tree
 struct TreeNode *Insert(struct TreeNode *t, int d) {
-	printf("Inserting \n");
+	//printf("Inserting \n");
 	if (t == 0) {
-        t = (struct TreeNode*)malloc(sizeof(t));
-        if (t == 0) {
-            return t;
-        }
+        t = (struct TreeNode*)malloc(sizeof(struct TreeNode));
         t->d = d;
         t->left = t->right = 0;
+	} else if (t->d == d) {
+        return t;
 	} else if (t->d > d) {
         t->left = Insert(t->left, d);
+        //Insert(t->left, d);
 	} else {
         t->right = Insert(t->right, d);
+        //Insert(t->right, d);
 	}
     return t;
 }
@@ -54,15 +55,13 @@ return t;
 // 1 point: print given tree from smallest element to largest element
 void PrintSorted(struct TreeNode *t) {
     if (t == 0) {
-        printf("%d \n", t->d);
+        //printf("%d \n", t->d);
         return;
     }
-    printf("Printing");
+    printf("Printing \n");
     PrintSorted(t->left);
     printf("%d \n", t->d);
     PrintSorted(t->right);
-
-
 }
 
 // given a non-empty tree t, return the largest element in the tree
@@ -80,21 +79,13 @@ int main()
 	struct TreeNode *binarytree = 0;
 
 	binarytree = Insert(binarytree, 15);
-	printf("%d \n", Find(binarytree, 15));
 	binarytree = Insert(binarytree, 9);
-    printf("%d \n", Find(binarytree, 9));
-	binarytree = Insert(binarytree, 46);
-    printf("%d \n", Find(binarytree, 46));
+    binarytree = Insert(binarytree, 46);
 	binarytree = Insert(binarytree, 21);
-	printf("%d \n", Find(binarytree, 21));
 	binarytree = Insert(binarytree, 3);
-	printf("%d \n", Find(binarytree, 3));
 	binarytree = Insert(binarytree, 7);
-	printf("%d \n", Find(binarytree, 7));
 	binarytree = Insert(binarytree, 9);
-	printf("%d \n", Find(binarytree, 9));
 	binarytree = Insert(binarytree, 2);
-	printf("%d \n", Find(binarytree, 2));
 	PrintSorted(binarytree);
 /*
 	binarytree = Delete(binarytree, 5);

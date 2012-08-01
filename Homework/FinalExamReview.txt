@@ -1,0 +1,81 @@
+1.
+midterm2.txt
+a is 10.000 and b is 5.200
+aBcc
+
+2. 
+compiler sees
+int a, b;
+inf main() {
+	printf("a\n");
+	a=3;
+	b=10;
+	printf("sum is", a+b + 3 + 8 + 3.14);
+	return 0;
+}
+
+3.
+//hello world
+//str1 = hello world
+// hello wo/0
+//str2 = hel/0
+11
+hello wohel
+
+4.
+//string 1 longest
+//str1: the quick brown duck is a duck
+//str2: fox
+//str3: fox
+void Replace(char *str1, char *str2, char *str3) {
+	int L = strlen(str1);
+	int L2 = strlen(str2);
+	int L3 = strlen(str3);
+	int n = 0;
+	char s4[101];
+	char stemp[101];
+	for(i=0; i<L; i++) {
+	strcpy(temp, &(str1[i]));
+	temp[L2] = '\0'
+	if (strcmp(temp, str2) == 0) {
+		//replace
+		strcat(s4, str3);
+		i += L2-1;
+		n+=L3;
+	} else { //don't replace
+		s4[n] = str1[i];
+		s4[n+1] = '\0';
+		n++;
+	}
+
+	}
+	strcpy(str1, s4);
+}
+
+5.
+int main (int argc, char *argv[]) {
+	int n;
+	sscanf(argv[2], "%d", n);
+	printf("%s ", argv[1]);
+	printf (" are going");
+	for (int i = 0; i<n; i++) {
+		printf("%s ", argv[3]);
+	}
+	printf("\n");
+	return 0;
+}
+
+6b.
+//id, name, name(s) of classes student is taking
+void PrintStudent(struct Student *sptr) {
+	printf("%d\n", sptr->id);
+	printf("%s\n", sptr->name);
+	for (int i = 0; i< sptr->nClasses; i++) {
+		printf("%s \n", sptr->classes[i]->name);
+	}
+
+	
+}
+
+
+

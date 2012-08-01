@@ -1,0 +1,11 @@
+int i;
+int arr[8][16]
+int *arr2[8];
+int arr3[16];
+arr[0] = arr3;
+arr2[1]=&i;
+for(i = 0; i<8; i++) {
+	arr2[i]=(int *)malloc(sizeof(int* 16));
+}
+arr2[2][3] = 7;
+arr[2][3] = 7;
