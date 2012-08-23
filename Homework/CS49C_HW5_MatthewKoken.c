@@ -1,0 +1,341 @@
+/*
+*@author Matthew Koken
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+
+int SharkMatrix[8][8];
+int FishMatrix[8][8];
+int fishCount;
+
+// initialize
+void Initialize() {
+	int i, j;
+	for (i=0; i<8; i++) {
+		for (j=0; j<8; j++) {
+			SharkMatrix[i][j] = 0;
+			FishMatrix[i][j] = 0;
+		}
+	}
+	SharkMatrix[2][6] = 1;
+	SharkMatrix[5][1] = 1;
+	SharkMatrix[3][7] = 1;
+	SharkMatrix[1][1] = 1;
+	SharkMatrix[4][2] = 1;
+	FishMatrix[4][2] = 1;
+	FishMatrix[4][5] = 3;
+	FishMatrix[2][6] = 1;
+	FishMatrix[6][2] = 1;
+	FishMatrix[1][7] = 2;
+	FishMatrix[3][5] = 1;
+	FishMatrix[5][2] = 2;
+	FishMatrix[1][1] = 3;
+}
+
+
+// simulate one timestep
+// each shark and fish goes to random adjacent cell
+// if shark and fish in same cell, all fish in that cell disappear
+// sharks live forever and don't reproduce
+// fish live forever if not eaten. at each timestep, each fish has 0.25 chance of reproducing
+// at each timestep, let sharks eat first, then let fish reproduce, then let shark and fish move
+// extra credit: 2 points
+
+void eat() {
+    for(int i = 0; i < 8; i++) {
+        for(int j = 0; j < 8; j++) {
+            //if shark is present in same cell as fish
+            if(SharkMatrix[i][j] == 1 && FishMatrix[i][j] == 1) {
+                FishMatrix[i][j] = 0;
+            }
+        }
+    }
+}
+
+void reproduce(int xpos, int ypos) {
+    int chance;
+    int count = FishMatrix[xpos][ypos];
+    for (; count > 0; count --) {
+        chance = rand() % 4;
+        if (chance == 1) {
+            FishMatrix[xpos][ypos]++;
+        }
+    }
+}
+void sharkMove() {
+    int chance;
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            if (SharkMatrix[i][j] == 1) {
+                chance = rand() %9;
+                while (chance != -1) {
+                    switch (chance) {
+                        case 0:
+                            if(j-1 >= 0 && SharkMatrix[i][j-1] == 0) {
+                                SharkMatrix[i][j-1] = -1;
+                                SharkMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 1:
+                            if(i+1 <= 7 && j-1 >= 0 && SharkMatrix[i+1][j-1] == 0) {
+                                SharkMatrix[i+1][j-1] = -1;
+                                SharkMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 2:
+                            if(i+1 <= 7 && SharkMatrix[i+1][j] == 0) {
+                                SharkMatrix[i+1][j] = -1;
+                                SharkMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 3:
+                            if(i+1 <= 7 && j+1 <= 7 && SharkMatrix[i+1][j+1] == 0) {
+                                SharkMatrix[i+1][j+1] = -1;
+                                SharkMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 4:
+                            if(j+1 <= 7 && SharkMatrix[i][j+1 == 0]) {
+                                SharkMatrix[i][j+1] = -1;
+                                SharkMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 5:
+                            if(i-1 >= 0 && j+1 <= 8 && SharkMatrix[i-1][j+1] == 0) {
+                                SharkMatrix[i-1][j+1] = -1;
+                                SharkMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 6:
+                            if(i-1 >= 0 && SharkMatrix[i-1][j]==0) {
+                                SharkMatrix[i-1][j] = -1;
+                                SharkMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 7:
+                            if(i-1 >= 0 && j-1 >= 0 && SharkMatrix[i-1][j-1]==0) {
+                                SharkMatrix[i-1][j-1] = -1;
+                                SharkMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 8:
+                            chance = -1;
+                    }
+                }
+            }
+        }
+    }
+    for(int i = 0; i < 8; i++) {
+        for(int j = 0; j < 8; j++) {
+            SharkMatrix[i][j] = SharkMatrix[i][j] * -1;
+        }
+    }
+}
+
+void fishMove() {
+    int chance;
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            if (SharkMatrix[i][j] > 0) {
+                chance = rand() % 9;
+                while (chance != -1) {
+                    switch (chance) {
+                        case 0:
+                            if(j-1 >= 0 && FishMatrix[i][j-1] == 0) {
+                                FishMatrix[i][j-1] = FishMatrix[i][j] * -1;
+                                FishMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 1:
+                            if(i+1 <= 7 && j-1 >= 0 && FishMatrix[i+1][j-1] == 0) {
+                                FishMatrix[i+1][j-1] = FishMatrix[i][j] * -1;
+                                FishMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 2:
+                            if(i+1 <= 7 && FishMatrix[i+1][j] == 0) {
+                                FishMatrix[i+1][j] = FishMatrix[i][j] * -1;
+                                FishMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 3:
+                            if(i+1 <= 7 && j+1 <= 7 && FishMatrix[i+1][j+1] == 0) {
+                                FishMatrix[i+1][j+1] = FishMatrix[i][j] * -1;
+                                FishMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 4:
+                            if(j+1 <= 7 && FishMatrix[i][j+1 == 0]) {
+                                FishMatrix[i][j+1] = FishMatrix[i][j] * -1;
+                                FishMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 5:
+                            if(i-1 >= 0 && j+1 <= 8 && FishMatrix[i-1][j+1] == 0) {
+                                FishMatrix[i-1][j+1] = FishMatrix[i][j] * -1;
+                                FishMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 6:
+                            if(i-1 >= 0 && FishMatrix[i-1][j]==0) {
+                                FishMatrix[i-1][j] = FishMatrix[i][j] * -1;
+                                FishMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 7:
+                            if(i-1 >= 0 && j-1 >= 0 && FishMatrix[i-1][j-1]==0) {
+                                FishMatrix[i-1][j-1] = FishMatrix[i][j] * -1;
+                                FishMatrix[i][j] = 0;
+                                chance = -1;
+                            } else {
+                                chance = rand() % 9;
+                            }
+                            break;
+                        case 8:
+                            chance = -1;
+                    }
+                }
+            }
+        }
+    }
+    for(int i = 0; i < 8; i++) {
+        for(int j = 0; j < 8; j++) {
+            FishMatrix[i][j] = FishMatrix[i][j] * -1;
+        }
+    }
+}
+//empty spot = 0, full slot = 1
+void Simulate() {
+    eat();
+    for(int i = 0; i < 8; i++) {
+        for(int j = 0; j < 8; j++) {
+            if(FishMatrix[i][j] == 1) {
+            reproduce(i,j);
+            }
+        }
+    }
+    sharkMove();
+    fishMove();
+}
+
+
+
+// save the simulation data to any filename
+// 1 point
+void Save() {
+    FILE *fptr;
+    fptr = fopen("saveGame.txt", "wt");
+    for(int i = 0; i<8; i++) {
+        fprintf(fptr, "%d %d %d %d %d %d %d %d\n", SharkMatrix[i][0],SharkMatrix[i][1],SharkMatrix[i][2],SharkMatrix[i][3],SharkMatrix[i][4],SharkMatrix[i][5],SharkMatrix[i][6],SharkMatrix[i][7]);
+    }
+    for(int i = 0; i<8; i++) {
+        fprintf(fptr, "%d %d %d %d %d %d %d %d\n", FishMatrix[i][0],FishMatrix[i][1],FishMatrix[i][2],FishMatrix[i][3],FishMatrix[i][4],FishMatrix[i][5],FishMatrix[i][6],FishMatrix[i][7]);
+    }
+    fclose(fptr);
+}
+
+// load the data you have saved in the Save() function
+// 1 point
+void Load() {
+    FILE *fptr;
+    fptr = fopen("saveGame.txt", "rt");
+    //check to make sure there is something in the file
+    int empty = 0;
+    if(getc(fptr) == ' ') {
+        empty = 1;
+    }
+    if(empty == 1) {
+        Initialize();
+    } else {
+        for(int i = 0; i<8; i++) {
+            fprintf(fptr, "%d %d %d %d %d %d %d %d\n", SharkMatrix[i][0], SharkMatrix[i][1], SharkMatrix[i][2], SharkMatrix[i][3], SharkMatrix[i][4], SharkMatrix[i][5], SharkMatrix[i][6], SharkMatrix[i][7]);
+        }
+        for(int i = 0; i<8; i++) {
+            fprintf(fptr, "%d %d %d %d %d %d %d %d\n", FishMatrix[i][0],FishMatrix[i][1],FishMatrix[i][2],FishMatrix[i][3],FishMatrix[i][4],FishMatrix[i][5],FishMatrix[i][6],FishMatrix[i][7]);
+        }
+        fclose(fptr);
+    }
+}
+
+void PrintSharkMatrix() {
+	int i, j;
+	for (i=0; i<8; i++) {
+		for (j=0; j<8; j++) {
+			printf("%d ", SharkMatrix[i][j]);
+		}
+		printf("\n");
+	}
+	printf("\n");
+}
+
+void PrintFishMatrix() {
+	int i, j;
+	for (i=0; i<8; i++) {
+		for (j=0; j<8; j++) {
+			printf("%d ", FishMatrix[i][j]);
+		}
+		printf("\n");
+	}
+	printf("\n");
+}
+
+int main() {
+    srand(time(NULL));
+    Initialize();
+    Load();
+    for(int i = 0; i<10; i++) {
+        Simulate();
+    }
+    Save();
+    PrintFishMatrix();
+    PrintSharkMatrix();
+	return 0;
+}
+

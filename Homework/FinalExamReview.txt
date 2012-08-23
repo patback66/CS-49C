@@ -35,17 +35,17 @@ void Replace(char *str1, char *str2, char *str3) {
 	char s4[101];
 	char stemp[101];
 	for(i=0; i<L; i++) {
-	strcpy(temp, &(str1[i]));
-	temp[L2] = '\0'
-	if (strcmp(temp, str2) == 0) {
-		//replace
-		strcat(s4, str3);
-		i += L2-1;
-		n+=L3;
-	} else { //don't replace
-		s4[n] = str1[i];
-		s4[n+1] = '\0';
-		n++;
+		strcpy(temp, &(str1[i]));
+		temp[L2] = '\0'
+		if (strcmp(temp, str2) == 0) {
+			//replace
+			strcat(s4, str3);
+			i += L2-1;
+			n+=L3;
+		} else { //don't replace
+			s4[n] = str1[i];
+			s4[n+1] = '\0';
+			n++;
 	}
 
 	}
@@ -65,6 +65,10 @@ int main (int argc, char *argv[]) {
 	return 0;
 }
 
+6a.
+sarray = 1000 * (4 + 32 + 4 * 8 + 4) = 72000
+carray = 10 * 4 = 40
+
 6b.
 //id, name, name(s) of classes student is taking
 void PrintStudent(struct Student *sptr) {
@@ -77,5 +81,44 @@ void PrintStudent(struct Student *sptr) {
 	
 }
 
+6c. void AddClass(struct Student *sptr, struct SchoolClass *cptr) {
+	if (sptr->nclasses == 8 || cptr->nStudents == 32) {
+		return;
+	}
+	sptr->classes[sptr->nClasses] = cptr;
+	sptr->nClasses++;
+	cptr->students[cptr->nStudents] = sptr;
+	cptr->nStudents++;
+}
 
+6d. void RemoveInactive() {
+	for(int i = 0; i<1000; i++) {
+		if((sarray[i]!=0) && (sarray[i]->nClasses == 0) ) {
+			free(sarray[i]);
+			sarray[i]=0;
+		}
+	}
+//should concatenate list after removing
+}
+
+7. 
+11
+hello wohel
+
+8.
+struct ListNode{
+	int data;
+	struct ListNode *next;
+}
+struct ListNode *Reverse(struct ListNode * lptr) {
+	struct ListNode *lptr, *lptr2, *lptr3;
+	lptr3 = 0;
+	for(lptr1 = lptr; lptr1!=0; lptr1 = lptr1->next) {
+		lptr2 = (struct ListNode *)malloc(sizeof(struct ListNode));
+		lptr2->data = lptr1->data;
+		lptr2->next = lptr3;
+		lptr3 = lptr2;
+	}
+	return lptr2;
+}
 
